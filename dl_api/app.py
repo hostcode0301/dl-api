@@ -2,6 +2,10 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from .routers import items, upload
 
+from resnet_utils import CatDogModel
+
+import numpy as np
+
 app = FastAPI()  # Create FastAPI instance
 
 # Add routers
@@ -30,4 +34,8 @@ app.add_middleware(
 
 @app.get("/")
 async def root():
+    # model = load_model(None, None)
+    # RandomImagePrediction('./catdogs/Bernese.jpg', model)
+    model = CatDogModel()
+    model('./catdogs/test_dog.jpg')
     return {"message": "Hello World"}
