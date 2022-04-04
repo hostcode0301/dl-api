@@ -1,6 +1,7 @@
-from fastapi import APIRouter, File, UploadFile
+from fastapi import APIRouter, File, UploadFile, Depends
 from fastapi.responses import JSONResponse, FileResponse
 import os
+from ..dependencies import init_model
 
 router = APIRouter(
     prefix="/upload",
@@ -38,3 +39,14 @@ async def upload_file(file: UploadFile = File(..., description="File to upload")
             buffer.write(content)
 
     return FileResponse(fullpath)
+
+# Detect image is dog or cat
+
+
+@router.post("/detect", response_class=JSONResponse)
+async def cat_dog_detect(file: UploadFile = File(..., description="File to upload"), local_model=Depends(init_model)):
+    request_object_content = await file.read()  # Read file content
+
+    result = local_model(file=request_object_content)  # Call model
+
+    return {"message": result}

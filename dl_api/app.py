@@ -1,17 +1,20 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from .routers import items, upload
+from .dependencies import init_model
 
-from resnet_utils import CatDogModel
 
-import numpy as np
+# Create FastAPI instance with global Denpendency for model
 
-app = FastAPI()  # Create FastAPI instance
 
-# Add routers
+app = FastAPI(dependencies=[Depends(init_model)])
+
+# region Routers
 
 app.include_router(items.router)
 app.include_router(upload.router)
+
+# endregion
 
 # region CORS
 
@@ -29,13 +32,10 @@ app.add_middleware(
 
 # endregion
 
-# Basic demo
+
+# Home demo
 
 
 @app.get("/")
 async def root():
-    # model = load_model(None, None)
-    # RandomImagePrediction('./catdogs/Bernese.jpg', model)
-    model = CatDogModel()
-    model('./catdogs/test_dog.jpg')
     return {"message": "Hello World"}
