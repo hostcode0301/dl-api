@@ -9,7 +9,7 @@ python = "^3.8"
 fastapi = "^0.75.1"
 uvicorn = {extras = ["standard"], version = "^0.17.6"}
 python-multipart = "^0.0.5"
-torch = {url = "https://files.pythonhosted.org/packages/b1/c0/54bb06dc4f3998a3b5e017a6356a7764fd91bba56cf744705ccb565239f0/torch-1.10.0-cp38-cp38-win_amd64.whl"}
+torch = "1.10.0"
 numpy = "^1.22.3"
 torchvision = "0.11.1"
 
