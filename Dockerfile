@@ -32,5 +32,8 @@ COPY ./checpoint_epoch_4.pt /code
 RUN adduser -u 5678 --disabled-password --gecos "" appuser && chown -R appuser /code
 USER appuser
 
-# During debugging, this entry point will be overridden. For more information, please refer to https://aka.ms/vscode-docker-python-debug
-CMD ["uvicorn", "dl_api.app:app", "--host", "0.0.0.0", "--port", "80"]
+# For local debugging, use the following entry point:
+# CMD ["uvicorn", "dl_api.app:app", "--host", "0.0.0.0", "--port", "80"]
+
+# For production with Heroku container:
+CMD uvicorn dl_api.app:app --host 0.0.0.0 --port $PORT
